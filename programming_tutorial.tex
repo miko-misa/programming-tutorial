@@ -1,0 +1,504 @@
+\documentclass[a4paper]{ltjsreport}
+\usepackage[top=17truemm,bottom=17truemm,left=11truemm,right=11truemm]{geometry}
+
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\usepackage{luacode}
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\lsthk@SelectCharTable}{\lst@ifbreaklines\lst@Def{`)}{\lst@breakProcessOther)}\fi}{}{}{}
+\makeatother
+
+\title{programming-tutorial}
+\author{博ノ助 }
+\date{June 2023}
+
+
+\definecolor{terlogy}{HTML}{ebebeb}
+\newcommand{\terlogy}[2][|]{\colorbox{terlogy}{\texttt{\lstinline#1#2#1}}}
+
+% 背景色
+\definecolor{bg}{HTML}{1a2638}
+% タイトルの背景色
+\definecolor{titlebg}{HTML}{323e52}
+% 以下シンタックスハイライト設定
+% リテラルと演算記号
+\definecolor{literal}{HTML}{efba69}
+% 関数/変数の識別子（青）
+\definecolor{identifier}{HTML}{35b7eb}
+% コメント
+\definecolor{comment}{HTML}{818ea0}
+% 予約語
+\definecolor{reserved}{HTML}{f88ca0}
+% 区切り文字
+\definecolor{delimiter}{HTML}{8a92b6}
+
+\begin{luacode*}
+function init()
+  local numlist = ""
+  for i = -100, 1000 do
+    numlist = numlist .. tostring(i)
+    if i < 1000 then
+      numlist = numlist .. ", "
+    end
+  end
+  output = [[
+    \lstdefinelanguage{mypy}{
+      morekeywords=[1]{+=,=,==,!=,!,>,<,>=,<=,++,-,+,*,\%,/, ]]..numlist..[[},
+      morekeywords=[2]{False,None,True,and,as,assert,async,await,break,class,continue,def,del,elif,else,except,finally,for,from,global,if,import,in,is,lambda,nonlocal,not,or,pass,raise,return,try,while,with,yield,print,match,case},
+      morekeywords=[3]{defined_func, division},
+      literate=*{.}{{\color{delimiter}.}}1
+                {,}{{\color{delimiter},}}1 {:}{{\color{delimiter}:}}1
+                {)}{{\color{delimiter})}}1 {(}{{\color{delimiter}(}}1
+                {[}{{\color{delimiter}[}}1 {]}{{\color{delimiter}]}}1
+                {\{}{{\color{delimiter}\{}}1 {\}}{{\color{delimiter}\}}}1,
+      sensitive=true,
+      morecomment=[l]{\#},
+      morestring=[b]{\'},
+      morestring=[b]{\"},
+      alsoletter={\%<>=+-*\/1234567890!},
+      frame=none,
+      breaklines=true,
+      breakindent=12pt,
+      columns=fixed,
+      basewidth=0.5em,
+      numbers=left,
+      numberstyle={\scriptsize\color{white}},
+      stepnumber=1,
+      framexleftmargin=18pt,
+      keepspaces=true,
+      lineskip=-0.1ex,
+      tabsize=4,
+      backgroundcolor={},
+      basicstyle={\small\ttfamily\color{white}},
+      identifierstyle={\small\color{white}},
+      commentstyle={\small\color{comment}},
+      keywordstyle=[1]{\small\bfseries\color{literal}},
+      keywordstyle=[2]{\small\bfseries\color{reserved}},
+      keywordstyle=[3]{\small\bfseries\color{identifier}},
+      keywordstyle=[4]{\small\bfseries\color{delimiter}},
+      keywordstyle=[5]{\small\bfseries\color{keyword4}},
+      stringstyle={\small\ttfamily\color{literal}},
+    }
+
+    \lstdefinelanguage{myjava}{
+      morekeywords=[1]{+=,=,==,!=,!,>,<,>=,<=,++,-,+,*,\%,/, ]]..numlist..[[},
+      morekeywords=[2]{abstract, assert, boolean, break, byte, case, catch, char, class, const, continue, default, do, double, else, enum, extends, final, finally, float, for, goto, if, implements, import, instanceof, int, interface, long, native, new, package, private, protected, public, return, short, static, strictfp, super, switch, synchronized, this, throw, throws, transient, try, void, volatile, while},
+      morekeywords=[3]{println, myFunc},
+      literate=*{.}{{\color{delimiter}.}}1
+                {,}{{\color{delimiter},}}1 {;}{{\color{delimiter}:}}1
+                {)}{{\color{delimiter})}}1 {(}{{\color{delimiter}(}}1
+                {[}{{\color{delimiter}[}}1 {]}{{\color{delimiter}]}}1
+                {\{}{{\color{delimiter}\{}}1 {\}}{{\color{delimiter}\}}}1,
+      sensitive=true,
+      morecomment=[l]{//},
+      morestring=[b]{\'},
+      morestring=[b]{\"},
+      alsoletter={\%<>=+-*\/1234567890!},
+      frame=none,
+      breaklines=true,
+      breakindent=12pt,
+      columns=fixed,
+      basewidth=0.5em,
+      numbers=left,
+      numberstyle={\scriptsize\color{white}},
+      stepnumber=1,
+      framexleftmargin=18pt,
+      keepspaces=true,
+      lineskip=-0.1ex,
+      tabsize=4,
+      backgroundcolor={},
+      basicstyle={\small\ttfamily\color{white}},
+      identifierstyle={\small\color{white}},
+      commentstyle={\small\color{comment}},
+      keywordstyle=[1]{\small\bfseries\color{literal}},
+      keywordstyle=[2]{\small\bfseries\color{reserved}},
+      keywordstyle=[3]{\small\bfseries\color{identifier}},
+      keywordstyle=[4]{\small\bfseries\color{delimiter}},
+      keywordstyle=[5]{\small\bfseries\color{keyword4}},
+      stringstyle={\small\ttfamily\color{literal}},
+    }
+  ]]
+  output_ = string.gsub(output, "\n", "")
+  tex.sprint(output_)
+end
+\end{luacode*}
+
+\directlua{init()}
+
+
+\newtcolorbox{zennwt}[2][]{
+    enhanced,                         %tikzを用いた記法の処理
+    left=22pt,right=22pt,             %box内左右の余白
+    fonttitle=\small,                 %タイトルの書式
+    coltitle=white,                   %タイトルの文字の色
+    colbacktitle=titlebg,             %タイトルの背景の色
+    attach boxed title to top left={},%タイトルを左寄せに,少し微調整
+    boxed title style={               %タイトルボックスの装飾
+      skin=enhancedfirst jigsaw,
+      arc=1.5mm,                      %タイトルボックスの角の弧
+      bottom=0mm,
+      boxrule=0mm
+    },
+    boxrule=0pt,                      %枠線の太さ
+    colback=bg,                       %本文の背景色
+    colframe=bg,                      %本文の枠の色
+    sharp corners=northwest,          %左上の角の調整
+    breakable,                        %ページ跨ぎOK
+    title=\texttt{#2},                %タイトル
+    arc=2.5mm,                        %角の弧の背景
+    #1
+}
+
+\newtcolorbox{zenn}[1][]{
+    left=22pt,right=22pt,
+    boxrule=0pt,
+    colback=bg,
+    colframe=bg,
+    breakable,
+    arc=2.5mm,
+    #1
+}
+
+\definecolor{columnbg}{HTML}{fff6e4}
+\definecolor{columntitle}{HTML}{edcd8c}
+
+\newtcolorbox{column}[2][]{
+    enhanced, title=\textbf{#2}, attach boxed title to top left={xshift=3mm, yshift*=-\tcboxedtitleheight/2}
+}
+
+\makeatletter
+\def\section{\@startsection {section}{1}{\z@}{-2.5ex plus -1ex minus -.2ex}{2.5 ex plus .2ex}{\Large \bfseries \sffamily}}
+\def\subsection{\@startsection {subsection}{1}{\z@}{-1.5ex plus -1ex minus -.2ex}{2.3 ex plus .2ex}{\Large \sffamily}}
+\def\subsubsection{\@startsection {subsubsection}{1}{\z@}{-2.5ex plus -1ex minus -.2ex}{.3 ex plus .2ex}{\large \sffamily}}
+
+\def\teremp[#1]{\@ifnextchar[{\teremp@sec[#1]}{\textbf{ #1 }}}
+\def\teremp@sec[#1][#2]{\;\textbf{#1\,(\texttt{#2})}\;}
+\makeatother
+
+\newcommand{\impact}[1]{\textbf\sffamily #1}
+\newcommand{\mail}[2]{\href{mailto:#2}{#1}}
+\newcommand{\link}[2]{\href{#2}{#1}}
+
+\pagestyle{fancy}
+\lhead{\fontsize{8pt}{0pt}\selectfont \hyperlink{top}{プログラミング入門}}
+\rfoot{\copyright 博ノ助/miko-misa 2023}
+\cfoot{\thepage/\pageref{LastPage}}
+
+\newcommand{\Chapter}[1]{\chapter{#1}\thispagestyle{fancy}}
+
+\begin{document}
+
+
+\chapter*{はじめに}
+コンピュータの開発から半世紀弱が経ちました.それとともに,コンピュータを制御する方法は指数関数的に進歩してきました.コンピュータの基本である「計算」を機械的に行おうという試みは紀元前から見られましたがコンピュータの計算の基本となる理論はつい100年ほど前に確立されました.\teremp[Alan Turing][1912-1954]は数学的「計算可能性」についての議論で,チューリングマシンを提案し,数学的に計算の手順を捉えるための基礎を築きました.第二次世界大戦では,暗号解読のためにさまざまな機械が開発されました.特にドイツの暗号は複雑で,エニグマが有名ですが,それは機械式の解読機によって解読することができました.しかし,ヒトラーや将官たちが使用していた\teremp[ローレンツSZ42]による暗号はさらに複雑で,機械式の解読には時間がかかりすぎました.そこでイギリスで開発されたのが\teremp[コロッサス]です.コロッサスは真空管を使った電子計算機で,そのプログラムにはハードウェアで設定されたものが使用されました.戦争終結後,\teremp[ENIAC][Electronic Numerical Integrator and Computer]という世界初の汎用電子計算機が開発され,コンピュータの単純な計算能力としての役割がスタートしました.ただし,その時点ではプログラムはハードウェアによって与えられており,ソフトウェアという概念はまだ存在していませんでした.1950年代になると,高水準言語が開発され,人間はパンチカード（紙に穴を開け,穴の有無でプログラムを表す手法）やスイッチを使わずに,より人間の言語に近い形でプログラムを記述できるようになりました.また,プログラムをコンピュータ本体に保存し,再利用するバッチ処理の登場により,コンピュータの操作はソフトウェアによって行われるようになっていきました.やがてコンピュータは\teremp[パーソナルコンピュータ]として進化を遂げ,\teremp[AppleのMacintosh]によって\teremp[GUI][Graphic User Interface]が追加されたことにより多くの人に受け入れられる形となりました.
+\\
+\\
+これはコンピュータの歴史であると同時に「コンピュータを制御する方法」の進化でもあります.プログラムはコンピュータを操作する唯一の方法ではありませんが,現代においてはほとんどすべてのコンピュータをプログラムで操作できるのです.コンピュータを操作し自分の能力を拡張することに関してプログラムは大きな役割を果たしてくれます.今日の情報化社会では大量の情報を処理することが求められており,プログラムはそれらを行ってくれる機械への道標となるのです.
+\\
+\\
+本書では,「プログラムを書く」といった狭い視点ではなく「機械を正しく操作する」という大きな観点からプログラミングを俯瞰しその基本理念や具体的な考え方について解説していきます.本書ではわかりやさのため\teremp[Python]を念頭に解説をしますが,他の言語についても補助的に掲載しており,言語に縛られない理論について深く考察していくつもりです.この考察が貴方を言語による束縛から開放し,言語を超えた真の理解ができる一助となれば幸いです.
+
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+
+\Chapter{プログラミング言語}
+\section{プログラミング言語とは}
+プログラミング言語とは情報の構造を形成し,それが処理される---別のより最適な状態に変換されるタスクについてその内容を完全に記述できるルールのことです.つまりは,情報が存在するときにその情報をその情報足らしめている要因,そして情報が正しく移管されることを担保する要因,を記述するのがプログラミング言語です.これは非常に自然言語\footnote{
+  人間が意思疎通のために日常的に用いる言語であり,文化的背景を持っておのずから発展してきた言語.日本語,英語,中国語などがこれに当たる.}に似ています.人間は情報伝達のツールとして言語を使用していますが,その情報が情報として人々の脳に存在するためには言語が必要です.\footnote{哲学においては必ずしもクオリアは言語ベースではない可能性があるが,ここでは議論しない.}同様に伝達元と伝達先で同一の情報を受け取れるように担保しているのも言語というルールです.この性質上,プログラミング言語は自然言語をもとに定義されます.現に,多くのプログラミングはアルファベットで記述し使用する単語は英単語です.ただ,明確に違うのが情報=データが数字であることです.これはコンピュータが0と1の2進法で動作しているためであり,プログラミング言語が自然言語と一線を画している理由です.もちろん,世界はすべて数値で表せるわけではないので,コンピュータで扱われる「情報」は数値ベースで,曖昧さは一切ありません.なので自ずと情報を扱うプログラミング言語に曖昧さはなく,自然言語よりもより抽象化され,効率化されています.例えば自然言語ではある程度文型が決まってることが多いですが,それを崩した形も頻繁に登場し,省略,倒置が頻繁に起こります.しかしプログラミング言語ではそもそも最適化されているので省略できない部分のみで構成されていますし,倒置\footnote{一見すると記述の順番が前後しているように見える場合があるが,これは「倒置」としての文法ルールではない.}は起こりません.すべてがいくつかの文法ルール上で成り立っています.
+
+\section{言語の構成要素}
+プログラミング言語がどのようなものかはわかりました.では具体的に言語はどのような要素で構成されているのでしょうか.わかりやすさのため,自然言語と対照させて考えてみましょう.自然言語は主に「文法」と「単語」で構成されているようです.それぞれの単語に品詞が存在し,品詞によって単語の役割が異なり,それを規定しているのが文法です.対してプログラミング言語は「文法」と「値」で構成されています.先程のセクションでプログラミングは情報を扱うものであると述べましたが,その「情報」となるのが「値」です.今の段階では0,1,2といった数字のことだとイメージしても構いません.では自然言語での「単語」はプログラミング言語ではどうなってしまったのでしょうか.それはすべて「定義」として「文法」に取り込まれています.プログラミング言語は効率的な言語なのでその場限りで定義を行うことができる文法が存在します.例えば,自然言語でも「個々で言う〇〇とは△△のことである.」と断りを入れて新しい単語を使用する場面があります.プログラミング言語ではこういった定義が日常的に行われており,自分以外が定義したものを使うことができます.プログラムは「定義する」命令と「値を処理する」命令を繰り返すことで成り立っているのです.これがプログラミング言語最大の特徴です.他人が予め定義してくれたものを使用し,新たなプログラムを制作することが可能でこういった他人の定義した要素を\teremp[ライブラリ]と呼びます.何十年を通して培われたライブラリ郡を簡単に使用できることがプログラミング言語を効率化させているだけでなく,プログラミング言語が急成長することができた要因の一つとなっているのです.
+
+\section{言語の多様化}
+現在,世界的に頻繁使われるプログラミング言語は200種類以上存在します.なぜこのように多様な言語が共存しているのでしょうか.それは言語に向き不向き,つまり特徴があるからなのです.当然,プログラミング言語によってどのようにコーディング\footnote{実際にプログラミング言語を用いてプログラムを記述すること.}されるのかは大きく異なります.ただ,それだけではなく安全性や速度,実装するできる機能も大きく変わるのです.どんなプログラムでもエラーをはらんでいます.エラーが起きてしまった際にどのように処理をするのかということは非常に重要ですが,エラーを防ぐような仕組みが存在する言語もあります.そういった言語では非常に厳しい設計になっておりプログラムの記述コスト\footnote{プログラム記述する際に必要な時間,お金,人材といったリソースのこと.}と引き換えに安全性を担保している言語があります.また,設計をある程度ゆるくしたり,何回も行っている処理を省略するといった最適化を行うことで実行速度を確保している言語も存在します.さらには,言語の設計によっては同じ機能を実装する場合でも単純な記述量で差---つまりは「その機能を実装するのにどのような方法を取ればいいのか」ということによる記述量の差が生まれる場合もあります.こういった理由でそれぞれの言語には「何をするのに適しているのか」といった向き不向きが生まれます.
+\\
+\\
+また,「ライブラリ」も大きな要因になっています.例えばアプリケーションを開発する場合を考えてみましょう.この際,スマートフォンの機能にアクセスするには複雑な手続きが必要になります.インターネットに接続するだけでも様々な認証をこなし,（コンピュータにとっては）長時間の通信を維持しなければなりません.しかしこういった手続きを予め用意してくれたライブラリがあるとどうでしょうか.最悪の場合,一行で済んでしまうかもしれません.さらに,インターネットに接続する際に特別な操作をしたい場合もあるかもしれません.こうなった場合は既存の機能を一部改変できるようになっていればかなり楽ですよね.これが行えるのが\terlogy{Java}や\terlogy{Swift}といった\teremp[オブジェクト指向\footnote{オブジェクト指向については後述.プログラミング言語設計の考え方の1つです.}]型の言語で,現にアプリケーション開発では頻繁に使われています.こういったライブラリとの兼ね合いやライブラリそのものがプログラミング言語が衰退し,表舞台から姿を消すことを妨げているのです.
+\\
+\\
+言語学が学問として成立していることからもプログラミング言語も言語である以上,その設計にも多様な考え方があり,文法ルールの違いだけでなくこういった考え方の違いがプログラミング言語の向き不向きを決定しているのです.そして,そういった特徴がプログラミングの多様性となっています.
+
+\section{プログラムの実行}
+プログラミング言語によって記述されたプログラムはそれ単体では動作しません.当然,「実行する」というステップを踏むことになります.実行の方式は大きく分けて\teremp[インタプリタ方式][Interpreter Method]と\teremp[コンパイル方式][Compile Method]の2つが存在します.その2方式とも最初の流れは同じになりますのでそれを下に示します.
+
+\begin{enumerate}
+  \item 字句解析\\
+        プログラムを読み取り,記号や単語などを読み取ります.自然言語では,「品詞分解」に当たります.
+  \item 構文解析\\
+        字句解析されたプログラムを元に\teremp[抽象決定木][AST;Abstract Syntax Tree]などのデータ構造を構築して,構文を解釈します.
+\end{enumerate}
+
+次は,その後どのように処理されるかにおいて2つに違いがあるのでそれぞれについて説明します.
+
+\subsection{インタプリタ方式}
+インタプリタ方式はつソースコードから行ごとまたは文ごとに直接実行する方式です.字句解析,構文解析,ASTを元に実行\footnote{この際,直接実行する他に低水準な中間表現や機械語に変換し効率化するものも存在する},というステップ毎行行います.プラットフォームに依存せずこういった実行作業を担う「解釈機」さえあればどこでも実行が可能です.また、1行ずつ実行する性質上,プログラミング言語は\teremp[REPL][Read-Eval-Print Loop]\footnote{コンソールなどに1行ずつコード入力し対話式にプログラムを進めていく方式}などの対話的な機能を提供することができます。
+\\
+\\
+ただ,毎行実行されるため,プログラム全体の動作が遅くなる可能性があります.また,解釈機が環境に存在する必要があり,非開発者の場合でもその言語の解釈機をインストールしなければなりません.インタプリタ方式のプログラミング言語の例として\texttt{Python, Ruby, Perl, PHP, JavaScript, Lua, R, bash, sh, zsh, BASIC, Lisp}が挙げられます.全体として手頃で緩めの設計であることが多いです.
+
+\subsection{コンパイル方式}
+コンパイル方式とはその名の通り,コンパイルが必要になります.コンパイルはプログラム全体を字句解析,構文解析した後に次のような処理を行う方式です.
+
+\begin{enumerate}
+  \item 意味解析\\
+        ACTを解析し,スコープや型のチェックといったプログラムの意味を特定します.
+  \item 機械語への変換\\
+        プログラムの意味を翻訳し,より低水準な機械語に変換します.
+  \item リンキング\footnote{リンキングはコンパイル作業に含まない場合があります.}\\
+        変換された機械語をソースコード間で結合処理を行います.
+  \item 実行\footnote{実行はコンパイル作業に含まない場合があります.}
+\end{enumerate}
+
+ここまで見ると,インタプリタ方式と変わらないように見えますが,最大の特徴はソースコードを一括で処理し,機械語に変換してしまうということです.インタプリタ言語とは違い,1行ずつ実行しないので機械語での保存---つまりソフトウェアとしての保存---が容易であり実行のみで考えれば環境に依存せず,実行速度も速い場合が多いです.ただし,全体をコンパイルする必要があるため開発速度はインタプリタ方式に劣ります.コンパイル方式の言語として\texttt{C/C++, Java, C\#, Swift, Objective-C, Rust, Go, Kotlin, Fortran, COBOL, Assembly}が挙げられます.全体を意味解析してから実行できるので安全性や事前チェックが厳しい言語が多く,アプリやシステムといったものに使われる事が多いです.
+
+\Chapter{データ型と値}
+\section{データ型とは}
+プログラミング言語には「型」といった概念が存在します.前章でプログラミング言語は情報を情報たらしめるルールであることを確認しました.しかしどんな情報でも等しく扱えるわけではありません.例えば,ここに「8」が存在するとします.「これに『10』を加えてください」と言われたはあなたはなんと答えるでしょうか.多くの方はおそらく「18」と答えたことでしょう.しかし,「810」と答える方も少なからずいるのではないでしょうか.そう答えなかったとしても「810」という答えには納得できると思います.これは与えられたもの---ここではあえて「数値」という呼称は避けますが---が数字なのか文字なのかという認識の違いです.人間は柔軟に考えることができますが,すべてが数値化されたコンピュータではこの違いは大変な違いです.前者の場合,「8」は$1000_{(2)}$\footnote{2進法で8.}という数字であり,後者の場合は\terlogy{U+0038}\footnote{Unicode表記で"8".}という文字になるのです.もしあなたが数字としての「8」と文字としての「10」を足してくださいと言われたら困るでしょう.
+\\
+\\
+機械がこれを間違えないように「型」を設定し,情報---つまりは「値」---の形式を決定しているのです.言語によって様々で整数と浮動小数点数\footnote{いわゆる少数のこと}を別の型に設定している言語や,同じ型として扱う言語も存在します.こういった型の設定方法や型を確認する手順などを「型システム」といい,型システムの設計の違いも言語の特徴の1つです.
+
+\section{プリミティブ型と参照型}
+型において非常に難解で重要な概念が\teremp[プリミティブ型（基本データ型）]と\teremp[参照型]の違いです.型には大きく分けてこの2つがあると思って構いません.
+
+\subsection{プリミティブ型}
+プリミティブ型は基本データ型とも呼ばれ,最も基本的な型でプログラミング言語の仕様に組み込まれる形で標準的に用意されているものです.言語によってどのようなものが用意されているかはまちまちですが\terlogy{Java}では以下のようなものがあたります.
+
+\begin{center}
+  \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{型}      & \textbf{ビット数} & \textbf{説明}                                \\
+    \hline
+    \texttt{byte}    & 8                 & 8ビットの符号付き整数値                      \\
+    \hline
+    \texttt{short}   & 16                & 16ビットの符号付き整数値                     \\
+    \hline
+    \texttt{int}     & 32                & 32ビットの符号付き整数値                     \\
+    \hline
+    \texttt{long}    & 64                & 64ビットの符号付き整数値                     \\
+    \hline
+    \texttt{float}   & 32                & 単精度浮動小数点数                           \\
+    \hline
+    \texttt{double}  & 64                & 倍精度浮動小数点数                           \\
+    \hline
+    \texttt{boolean} & -                 & 真偽値 (\texttt{true} または \texttt{false}) \\
+    \hline
+    \texttt{char}    & 16                & Unicode文字                                  \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsection{参照型}
+参照型はプリミティブ型の集合である複合データ型\footnote{複数のプリミティブ型とそれらを保存したり扱いやすくしたりする構造の2つからなるデータ型.}の一種で,値そのものではなく値の\teremp[ポインタ（参照）]を保存する型のことです.例えば家の中に人がいます.家には1人の人しか入れません.プリミティブ型ではこの場合人そのものをデータに保存します.もしデータがコピーされることがあれば家の中の人がコピーされ,コピーしてできた人は他の家に移り住みます.対して,参照型は家の住所だけをデータに保存します.これをコピーしても同じ住所を保存したデータがもう1つ複製されただけでその2つのデータは同じ住所を指します.人はコピーされず1人のままです.プリミティブ型以外のほとんどの型が参照型でクラスなども参照型になります.
+\\
+以下は\terlogy{Python}による2つの型の違いを説明したコードです.\terlogy{Python}がわからない方は読み飛ばして構いません.
+\begin{zenn}
+  \begin{lstlisting}[language= mypy]
+# プリミティブ型の例
+num1 = 10
+num2 = num1
+
+print("num1:", num1)  # 出力: num1: 10
+print("num2:", num2)  # 出力: num2: 10
+
+num1 = 20
+
+print("num1:", num1)  # 出力: num1: 20
+print("num2:", num2)  # 出力: num2: 10 (num2は変更されていない)
+
+# 参照型の例
+list1 = [1, 2, 3]
+list2 = list1
+
+print("list1:", list1)  # 出力: list1: [1, 2, 3]
+print("list2:", list2)  # 出力: list2: [1, 2, 3]
+
+list1.append(4)
+
+print("list1:", list1)  # 出力: list1: [1, 2, 3, 4] (list1が変更された)
+print("list2:", list2)  # 出力: list2: [1, 2, 3, 4] (list2も同じ変更が反映されている)
+\end{lstlisting}
+\end{zenn}
+上の例では変数の代入で例を示していますが,関数やメソッドに引数を渡すときも上のコードのように関数内での再代入や値の編集を行うと,関数外の変数違いが出てくることになります.
+
+\section{変数とは}
+変数とは「データ型」「識別子（変数名）」「値（情報/データ）」の3要素を持つ,データの記憶域のことを指します.「変数」という名前は多くの方が数学分野で聞いたことがあるでしょう.数学では未知数を$x$や$a$といった文字で置くことで方程式を構成します.プログラミングでの変数も概ね同じように識別子=変数名という名前で値を管理します.ただ1つ違うのは値の型が数学とは違って数字以外の可能性があるということです.なので,変数は必ずその保存するデータ型を明確にしなければなりません.\footnote{明確にするというのは明記するということではない.一部の言語ではデータ型の記載を省略できる.}
+
+\section{変数のライフサイクル}
+変数はどのように生まれてどのように破棄されていくのでしょうか.突然,突拍子のないことを言い出したと思うかもしれませんがこれは非常に大事な問題です.コンピュータの記憶領域---データの保管場所は有限です.また同時に,必要な変数が最初から用意されているわけでもありません.変数が生まれて,使用され,破棄されていること,そのことこそがライフサイクルというのです.
+\\\\
+変数のライフサイクルは一般的に\teremp[確保（宣言）],\teremp[代入], \teremp[参照], \teremp[解放]の4ステップです.この,確保から解放までの期間をライフタイムとも呼びます.
+
+\subsection{確保（宣言）}
+プログラム内で変数名,データ型\footnote{データ型は言語と場合によって省略可.}を明記し,変数を定義することを\teremp[宣言],その命令を行い,コンピュータの記憶領域内のにデータを保存するための領域を予約するのを\teremp[確保]といいます.変数に対するすべての操作に先んじて行われる必要があります.\terlogy{Python}では宣言のみを行うということができないので,代わりに\terlogy{Java}の宣言方法を以下に示します.
+
+\begin{zenn}
+  \begin{lstlisting}[language= myjava]
+int variable; // [データ型] [変数名];
+\end{lstlisting}
+\end{zenn}
+
+\subsection{代入}
+宣言した変数に「値」を紐づけることを代入といいます.概ね数学と同じ意味ですが,プログラミング言語には参照型が存在するので値そのものが代入されているわけではないことに注意してください.以下に\terlogy{Python}での代入方法を以下に示します.
+
+\begin{zenn}
+  \begin{lstlisting}[language= mypy]
+variable = 810 # [変数名] = [代入される値]
+\end{lstlisting}
+\end{zenn}
+
+また宣言後,最初に行われる代入を\teremp[初期化][initialize]といいます.宣言しただけの変数は非常に危険で意図しない動作の原因になる場合がある\footnote{変数自体は宣言されているため,言語によっては初期化してない状態の変数を参照することを未然に防ぐことができない.}ので最初に初期化するのが重要です.
+
+\begin{column}{\texttt{Python}における代入と初期化}
+  \terlogy{Python}では宣言時に初期化を行う必要があります.つまり,宣言と初期化は同じものと考えて構いません.加えて,宣言（=初期化）と代入が見かけ上,同じコードになってしまいます.上の例では\terlogy{variable}という変数に\terlogy{810}という値を代入をしていますが,これは状況によっては\terlogy{variable}を宣言しているという意味になります.もし,\terlogy{variable}がそれ以前のコードで宣言されている場合は代入,そうでない場合は宣言となります.
+\end{column}
+
+\subsection{参照}
+変数にアクセスしその値を使用することを\teremp[参照]といいます.プリミティブ型の場合は単純に値を使いますが,参照型の場合は参照にアクセスします.殆どの言語において変数名を記載するだけで使うことができます.
+\begin{column}{変数の展開}
+  変数を使用するという言い方だけでは複雑なコードを理解するときに非常に苦労する可能性があります.そこで「変数を展開する」というイメージを持つことが大切です.より深い変数から順にその値で置き換えるということです.次の例を見てみましょう.1行目は展開を繰り返すことで4行目と同じ意味になります.
+  \begin{zenn}
+    \begin{lstlisting}[language= mypy]
+ans = add(add(a, b), 1) # a=5 b=7とし,addは2つの引数を加える関数とする.
+ans = add(add(5, 7), 1) # 1回目の展開
+ans = add(12, 1)        # 2回目の展開
+ans = 13                # 3回目の展開
+\end{lstlisting}
+  \end{zenn}
+\end{column}
+
+\subsection{解放}
+値を記憶領域から削除し,参照できない状態になることを\teremp[解放]といいます.解放後はその値へのアクセス全般が担保されない状態となります.似たような概念としてスコープというものがありますがそれとの違いは次節で説明します.
+
+\section{変数のスコープ}
+変数にアクセスできる範囲を\teremp[スコープ][scope]と言います.これは変数への意図しないアクセスを防ぐために設けられているもので,よく使用されるものは\teremp[グローバル（大域）スコープ]と\teremp[ローカル（局所）スコープ]に分けられます.グローバルスコープはアプリケーション全体やクラス全体から参照できるというもので「定数」や「メンバ変数」がこれに当たり,その変数をグローバルスコープで定義するのは適切なのかという吟味が必要です.対してローカルスコープはブロックごとに細かく設定されているものです.
+\\
+\\
+ローカルスコープには更に\teremp[関数スコープ]と\teremp[ブロックスコープ]の2種類のスコープが存在します.関数スコープは関数やメソッド内で定義された変数は関数外では参照できないというルールです.ブロックスコープはブロックを構成する区切り文字によって囲まれた内部（これを\teremp[ブロック]という.）でのみ参照できるというルールで,多くのプログラミング言語では\terlogy{\{\}}がこの区切り文字となっています.入れ子構造になっている場合は「より深い」ブロック内は基底ブロック内に含まれているということになるため,参照が可能です.
+\\
+ここで,次の\terlogy{Java}のコードを見てみましょう.\footnote{ここで\terlogy{Java}のコードを引用するのは\terlogy{Python}にブロックスコープが存在しないためであり,これは稀なことです.}
+
+\begin{zenn}
+  \begin{lstlisting}[language=myjava]
+// グローバルスコープをもつ変数
+String variableGlobal = "Hello,World!"
+
+// 関数を定義する
+void myFunc(String arg) {
+  String variableFunc = "Hello,Function!";
+
+  System.out.println(arg);            // argは関数スコープを持ち,参照可
+  System.out.println(variableFunc);   // <後述>
+  System.out.println(variableGlobal); // グローバルスコープなので参照可
+}
+
+// 関数外では
+System.out.println(arg);            // !Error
+System.out.println(variableFunc);   // !Error
+System.out.println(variableGlobal); // グローバルスコープなので参照可
+\end{lstlisting}
+\end{zenn}
+一般的に,引数はその関数内で関数スコープのみを持ち,関数内のどこでも参照できます.上の例であれば\terlogy{arg}のことです.対して\terlogy{variableFunc}は関数の中で定義されている変数なので関数スコープを持ちます.また,\terlogy{\{\}}に囲まれているのでブロックの内部で定義されていることになるのでブロックスコープも持ちます.9行目は定義ブロックと同じブロック内なので参照が可能です.
+
+\begin{column}{\texttt{Java}における関数スコープ}
+  \terlogy{Java}をはじめとした「『関数の構成』にも『ブロックの構成』にも\terlogy{\{\}}といった同じ区切り文字を使用する言語」は関数を形作っているブロックによるブロックスコープと関数スコープが同じ役割を果たしているので関数ブロックもブロックスコープに含めて考えることができます.
+\end{column}
+
+\terlogy{Java}は\terlogy{\{\}}単体でもブロックをブロックスコープについてのコードを見てください.
+
+\begin{zenn}
+  \begin{lstlisting}[language=myjava]
+{
+  // なにかの関数内
+  String variableA = "A";
+  {
+      String variableB = "B";
+      {
+          String variableB = "C";
+          // すべて参照可
+          // ○variableA ○variableB ○variableC
+      }
+      // ○variableA ○variableB
+  }
+  {
+      // <ポイント>
+      // ○variableA
+  }
+  // ○variableA
+}
+\end{lstlisting}
+\end{zenn}
+
+上のコードでは様々なブロック階層で変数を定義し,その位置で参照可能な変数だけを\terlogy{○\[変数名\]}という形で表現しています.一番階層の高い（=浅い）ブロックで定義された\terlogy{variableA}はより深いブロックとそれより深いブロックでも参照ができますが,対して\terlogy{variableB}はより深いブロックでは参照ができてますが,浅いブロックでは参照できません.14行目の\terlogy{<ポイント>}が書かれたブロックは\terlogy{variableB}の定義ブロックと同じインデントレベル\footnote{ブロックの入れ子構造がわかりやすいようにインデント（=タブやスペース2文字,4文字で字下げを行うこと.）をした際のインデント数のこと.入れ子が1つ増えるとインデントレベルは1だけ上がる.}ですが,\terlogy{variableB}の定義ブロックの入れ子または同じブロックにはなっていないので\terlogy{variableB}を参照することができません.
+
+\subsection{\texttt{Python}におけるブロックスコープ}
+\terlogy{Python}に限った話をしますと,\terlogy{Python}はブロックスコープを持ちません.なので,以下のようなコードが成り立ちます.
+
+\begin{zenn}
+  \begin{lstlisting}[language=mypy]
+def division(a, b):
+if b == 0:
+  ans = "divided by zero"
+else:
+  ans = a / b
+print(ans)
+\end{lstlisting}
+\end{zenn}
+
+\terlogy{Python}の場合,\terlogy{:（コロン）}がブロックを形成します.\terlogy{ans}が\terlogy{if}あるいは\terlogy{else}内で定義されていますが,その外でも\terlogy{print(ans)}のように使用できます.なお,\terlogy{ans}の型が揃ってなくてもかまわないのは\terlogy{Python}が「動的型付け言語」だからです.詳しくは次節で解説します.
+
+ですが,「1.グローバルスコープ」「2.初期化と代入が同じ」「3.関数スコープ」というのが重なって不思議な挙動となります.
+
+
+\begin{zenn}
+  \begin{lstlisting}[language=mypy]
+x = 10
+def func():
+  print(x)
+func()
+# 出力結果: 10
+\end{lstlisting}
+\end{zenn}
+これを実行してみると単に「10」と出力されます.これは\terlogy{x}がグローバルスコープなので関数内でも外の値を参照できるからです.ではこれはどうでしょう.
+
+\begin{zenn}
+  \begin{lstlisting}[language=mypy]
+x = 10
+def func():
+  print(x) # !Error
+  x = 20
+func()
+\end{lstlisting}
+\end{zenn}
+
+先程から1行だけ加え,表示後に値を「再代入」してみました.これは\terlogy{エラー}になります.関数内で\terlogy{x = 20}といった参照ではない動きをした場合,もしその識別子が登場してないなら,解釈機はこれを\teremp[初期化/宣言]と解釈します.すると\terlogy{print(x)}は初期化前の変数を参照したとしてエラーが起こるわけです.いくら解釈機が1行ずつ読んでいくとしても最終行の\terlogy{func()}の時点では関数定義をすべて読み終えているので関数内で使用する可能性のある変数などはどんなブロックにいてもすでにASTに組み込まれているのです.
+\\\\
+ここで,\terlogy{print(x)}を削除してあげるとエラーは発生しませんが,\terlogy{func()}関数内の\terlogy{x}とグローバルな\terlogy{x}は同じ識別子をもった別の変数として振る舞います.
+
+\begin{zenn}
+  \begin{lstlisting}[language=mypy]
+x = 10
+def func():
+  x = 20
+  print(x)
+func()
+print(x)
+
+# 出力結果: 20 10
+\end{lstlisting}
+\end{zenn}
+
+\section{型付け}
+変数に型を付与することを\teremp[型付け][typing]といって,その方式は\teremp[静的型付け][tatic typing]と\teremp[動的型付け][dynamic typing]の2つに分類できます.前者はコンパイル時に型の\teremp[検査][check]を行う方式で,後者は実行しながらその都度検査を行います.
+
+\end{document}
