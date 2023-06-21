@@ -1,0 +1,1 @@
+$pdflatex = 'lualatex %O %S';
