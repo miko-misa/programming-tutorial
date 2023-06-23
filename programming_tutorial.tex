@@ -625,7 +625,7 @@ System.out.println("情報：" + person); // 出力結果: 情報：Person{name=
 
 
 \begin{column}{だれも強い/弱いを意識してない}
-  上の例で\terlogy{PHP}が急に出てきて驚いた方も多いと思います.現在使われている言語のうち大多数が強い型付け言語です.もちろん,\terlogy{JavaScript}のような弱い型付けの言語が使われていることがありますが,強い/弱いの違いを意識する場面が非常に少ないのであまり意識しなくていいと思われる.
+  上の例で\terlogy{PHP}が急に出てきて驚いた方も多いと思います.現在使われている言語のうち大多数が強い型付け言語なので例が作りにくいのです.もちろん,\terlogy{JavaScript}\footnote{\terlogy{JavaScript}は文字列と数字を結合すると文字列となってしまうので上の例では使用しなかった.}のような弱い型付けの言語が使われていることがありますが,強い/弱いの違いを意識する場面が非常に少ないのであまり意識しなくていいと思います.
 \end{column}
 
 \subsection{型推論}
@@ -676,12 +676,9 @@ print(add("Hello, ", "World!")) # 出力結果: "Hello, World!"
     Lua             & {\color{red}動的}  & {\color{blue}弱い} & {○}             & 名前                          \\
     Haskell         & {\color{blue}静的} & {\color{red}強い}  & {○}             & 名前                          \\
     Scala           & {\color{blue}静的} & {\color{red}強い}  & {○}             & 両方                          \\
-    Groovy          & {\color{red}動的}  & {\color{red}強い}  & {○}             & -                             \\
     Shell scripting & {\color{red}動的}  & {\color{blue}弱い} & {-}             & 名前                          \\
-    Julia           & {\color{red}動的}  & {\color{red}強い}  & {○}             & 名前                          \\
     Visual Basic    & {\color{blue}静的} & {\color{blue}弱い} & {○}             & 名前                          \\
     Objective-C     & {\color{blue}静的} & {\color{red}強い}  & {-}             & 名前                          \\
-    Erlang          & {\color{red}動的}  & {\color{red}強い}  & {○}             & 名前                          \\
     Fortran         & {\color{blue}静的} & {\color{blue}弱い} & {-}             & 名前                          \\
     Prolog          & {\color{red}動的}  & {\color{red}強い}  & {-}             & 名前                          \\
     COBOL           & {\color{blue}静的} & {\color{blue}弱い} & {-}             & 名前                          \\
@@ -690,5 +687,119 @@ print(add("Hello, ", "World!")) # 出力結果: "Hello, World!"
   \end{tabular}
 \end{center}
 
+\section{定数と\texttt{Null}とリテラルと}
+ソースコード上に直接書いた値を\teremp[リテラル][literal]といいます.ここで注意しなければならないのは,リテラルは値を代入した変数のことを指しているのではなく,ソースコードに直接書いた部分だけを指すということです.以下に\terlogy{Python}による例を示します.
+
+\begin{zenn}
+  \begin{lstlisting}[language=mypy]
+number1 = 810           # リテラル
+text1 = "Hello, World!" # リテラル
+number2 = number1       # リテラルでない
+text2 = text1           # リテラルでない
+\end{lstlisting}
+\end{zenn}
+
+それに対して,初期化のみで代入ができない変数を特別に\teremp[定数][constant]といいます.本質的には変数と変わらないですが,変数と定数は比較できる関係で,一般的に変数といった場合は定数は除くことが多いです.型システムによって再代入が禁止されたり定数を定義する文法が用意されている言語が多いですが,\terlogy{Python}のように定数が存在しない言語もあります.以下に\terlogy{Java}の例を示します.
+
+\begin{zenn}
+  \begin{lstlisting}[language=myjava]
+final int MY_AGE = 18;
+public static final double PI = 3.14159265;
+\end{lstlisting}
+\end{zenn}
+
+\terlogy{Java}は1行目のように\terlogy{final}をつけるだけで基本的には定数となります.ただ,定数はいつでも使えるようしたいことが多いため,二行目の書き方が使われることが多いです.詳しいことはオブジェクト指向の章で述べます.
+\\
+\\
+プログラミングでは「値無し」を表すために\teremp[\texttt{Null}=ヌル=ナル][nil=ニル, None=ナン]という値が使われます.言語によって\terlogy{nil}などの別の呼び方になることもありますが,これは「値が存在しない」という値です.数学でいうところの「解なし」にあたります.例えば,$x^2+x+1=0$を満たす実数$x$は存在しないですよね.このようなときに$x$は\terlogy{Null}といえるのです.\terlogy{0}や\terlogy{""}（空文字=文字数0の文字列）は値が存在しているので\terlogy{Null}とはいえません.\terlogy{Null}値はどの型の性質も持たないので読み取ることしかできません.値が存在しないという概念や構文のミスが結果的に\terlogy{Null}に起因してしまう事が多く,初学者は頻繁に出会うことになります.
+
+\begin{column}{ヌル？}
+  実は英語の正確な発音では\terlogy{Null}はナルと発音します.しかし日本ではヌルと呼ぶことが一般的になってしまったのでむしろ正しい読み方となってしまいました.
+\end{column}
+
+\section{演算}
+値を計算することを\teremp[演算]という.
+
+\Chapter{制御構造}
+プログラムは一般的に書かれた命令を上からそして左から右に順に処理するのが基本ですが,その手続きの順番を変える役割をもつ文法やそのコード自体を\teremp[制御構造][control structures]といいます.制御構文,制御フロー文,構造化文なども同様の意味で使われることがあります.なお,複数の命令の集まりを\teremp[プロシージャ=手続き][procedure]や\teremp[ルーチン][routine]と言います.また,プロシージャの実行の流れを\teremp[フロー]と言います.本章ではこういった制御構造の種類について説明していきます.この章では基本的に\terlogy{Python}を使った例を挙げていますが,言語によって表記上の多少の差があることに留意してください.
+
+\section{ジャンプ・無条件分岐命令}
+実行フローを途中で切り上げ,前あるいは後ろの特定の位置からフローを再開する制御構造をジャンプといいます.一番基本的な制御構造ゆえに現代ではほとんど明示的には使われていないあるいは次節の条件分岐命令と同一視されています.ですが,ほとんどの制御構造がジャンプを利用しているので,私達は他の制御構造を通してジャンプを使うことができます.
+
+\begin{column}{悪魔の\texttt{Goto}文}
+  かつて,\terlogy{C}をはじめとした言語には\terlogy{Goto文}という構文が存在しました.これはコードにラベルなどの識別子を貼り付け,\terlogy{Goto文}でラベルを指定することでラベルを貼っていた命令に強制的にフローをある程度自由に移すことができました.複雑な処理を比較的簡単に記述できましたが,書いた本人にとって簡単でも読む人にとっては非常にわかりにくく,またロジックの崩壊によって無限ループや意図していないフローを作ることがあったので基本的に使うのは良くないという風潮が広まり,\terlogy{Goto文}は姿を消しました.
+  \\\\
+  なお,このときにフローや人間の思考がまるでスパゲッティのように絡まっていることからこのようにぐちゃぐちゃと複雑で命令の実行フローとコードの構造がわかりずらいコードを\teremp[スパゲッティ・コード]と呼ぶようになったと言われています.
+\end{column}
+
+\section{条件分岐命令}
+ある一定の法則に従ってある狭い範囲でのジャンプを行い,プロシージャの実行不実行を選択する命令を\teremp[条件分岐命令][branch instruction]という.単に分岐命令とも書く.本質的にはジャンプと大差はないがジャンプほどの自由度は設けられてないことが多く,どちらかというとプロシージャの取捨選択という意味合いの方が強い.
+
+\subsection{\texttt{IF}文・\texttt{ELSE}文・\texttt{IF-ELSE}文}
+
+基本的な条件分岐は\teremp[\texttt{IF}文]を使用して記述する.以下の例を見てみましょう.
+
+\begin{zenn}
+  \begin{lstlisting}[language=mypy]
+# ageという変数が初期化されているものとする.
+# if [条件文]:[ブロック]
+if age < 18:
+  print("あなたは未成年です.")
+
+# ageが18未満なら,出力結果: あなたは未成年です.
+
+\end{lstlisting}
+\end{zenn}
+
+
+これは\terlogy{age}の値によって\terlogy{print処理}を行うか行わないかを切り替えています.\terlogy{if}には条件が必要になりますが,条件というより\terlogy{boolean}の値を指定しているというほうが正しいです.\terlogy{if}は条件に指定した部分を演算あるいは展開などの実行を行いその結果の値が\terlogy{true}なら指定したブロックを実行し,そうでなければ---つまり\terlogy{false}なら読み飛ばします.大切なのは「\terlogy{boolean}を返す式を指定しなければならない=条件文」のと「ブロックを構成すること」です.
+\\\\
+また,それ以外の場合の処理を記述できる\teremp[\texttt{ELSE}文]と条件が合わないときに別の条件で別のブロックを追加できる\teremp[\texttt{ELSE-IF}文]もあります.例を見てみましょう.
+
+\begin{zenn}
+  \begin{lstlisting}[language=mypy]
+# ageという変数が初期化されているものとする.
+if age < 18:
+  print("あなたは未成年です.")
+# elif [条件文]:[ブロック]
+elif age < 20:
+  print("あなたは成人ですがお酒は飲めません.")
+# else:[ブロック]
+else:
+  print("お酒が飲めます.やったね.")
+
+# age < 18なら,     出力結果: あなたは未成年です.
+# 18 ≦ age < 20なら,出力結果: あなたは成人ですがお酒は飲めません.
+# 20 ≦ ageなら,     出力結果: お酒が飲めます.やったね.
+\end{lstlisting}
+\end{zenn}
+
+両構文ともに\terlogy{IF文}と\terlogy{ELSE-IF文}の後ろに付けて連なることでのみ使用できます.\terlogy{IF文}は条件分岐命令の後ろには連なりません.\terlogy{IF文}と\terlogy{ELSE-IF文}は条件が満たされ,ブロックの実行が終了した場合,連なっている制御構造の一番うしろにジャンプします.間に連なっている条件分岐命令をすべて無視します.また,\terlogy{ELSE-IF文}は\terlogy{IF文}同様に評価され条件に応じてブロックを実行するかしないかを決めます.そして,\terlogy{IF文}と\terlogy{ELSE-IF文}は満たされなかった場合,連なっている次の条件分岐命令を評価します.\terlogy{ELSE文}は連なった最後に置き,評価される場合常にブロックを実行します.
+\\\\
+かなり複雑そうですが,すべてを流れで捉えると簡単です.まず,\terlogy{IF文}の条件文を評価しして,これが偽であれば次の\terlogy{ELSE-IF文}の条件文を評価します.これも同様に偽であれば次の\terlogy{ELSE-IF文}に移ります.どこかの条件文が真となればそのブロックを実行し,後ろの\terlogy{ELSE-IF文}や\terlogy{ELSE文}を読み飛ばします.すべてで偽なら最後の\terlogy{ELSE文}のブロックが実行されます.なお,\terlogy{ELSE-IF文}は何個でも連なることができます.
+\\\\
+注意すべき点は
+
+\begin{itemize}
+  \item ブロックの実行後に一番うしろにジャンプするので間に条件が一致している\terlogy{ELSE-IF文}があっても実行されない.
+  \item \terlogy{IF文}は\terlogy{IF文}には連なることができない
+\end{itemize}
+
+ということです.前者は上に提示したコードの4行目からわかります.たとえば\terlogy{age}が\terlogy{5}の場合,\terlogy{IF文}に当てはまりますが,\terlogy{ELSE-IF文}の条件にも当てはまってるように見えます.しかし実行されるのは3行目のみです.3行目でブロックが終わったときにすでにすべての連なった条件分岐命令が読み飛ばされるので,このコードでは10行目にジャンプします.後者については以下のコードを見てみましょう.
+
+\begin{zenn}
+  \begin{lstlisting}[language=mypy]
+# ageという変数が初期化されているものとする.
+if age < 18:
+  print("あなたは未成年です.")
+if age < 20:
+  print("あなたはお酒は飲めません.")
+
+# age < 18なら,     出力結果: あなたは未成年です.あなたはお酒は飲めません.
+# 18 ≦ age < 20なら,出力結果: あなたはお酒は飲めません.
+\end{lstlisting}
+\end{zenn}
+
+実行結果が少し変わったのがわかりましたか？\terlogy{IF文}と\terlogy{IF文}は連ならないので3行目の実行後,4行目にジャンプします.そこは別の\terlogy{IF文}なので再び評価が行われます.たとえば\terlogy{age}が\terlogy{5}の場合,両方の\terlogy{IF文}に当てはまるので2回ブロックが実行されるのです.
 
 \end{document}
