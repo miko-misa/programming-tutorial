@@ -97,7 +97,7 @@ function init()
       morekeywords=[2]{abstract, assert, boolean, break, byte, case, catch, char, class, const, continue, default, do, double, else, enum, extends, final, finally, float, for, goto, if, implements, import, instanceof, int, interface, long, native, new, package, private, protected, public, return, short, static, strictfp, super, switch, synchronized, this, throw, throws, transient, try, void, volatile, while},
       morekeywords=[3]{println, myFunc},
       literate=*{.}{{\color{delimiter}.}}1
-                {,}{{\color{delimiter},}}1 {;}{{\color{delimiter}:}}1
+                {,}{{\color{delimiter},}}1 {;}{{\color{delimiter};}}1
                 {)}{{\color{delimiter})}}1 {(}{{\color{delimiter}(}}1
                 {[}{{\color{delimiter}[}}1 {]}{{\color{delimiter}]}}1
                 {\{}{{\color{delimiter}\{}}1 {\}}{{\color{delimiter}\}}}1,
@@ -136,7 +136,7 @@ function init()
       },
       morekeywords=[3]{println, myFunc},
       literate=*{.}{{\color{delimiter}.}}1
-                {,}{{\color{delimiter},}}1 {;}{{\color{delimiter}:}}1
+                {,}{{\color{delimiter},}}1 {;}{{\color{delimiter};}}1
                 {)}{{\color{delimiter})}}1 {(}{{\color{delimiter}(}}1
                 {[}{{\color{delimiter}[}}1 {]}{{\color{delimiter}]}}1
                 {\{}{{\color{delimiter}\{}}1 {\}}{{\color{delimiter}\}}}1,
@@ -406,7 +406,7 @@ variable = 810 # [変数名] = [代入される値]
 また宣言後,最初に行われる代入を\teremp[初期化][initialize]といいます.宣言しただけの変数は非常に危険で意図しない動作の原因になる場合がある\footnote{変数自体は宣言されているため,言語によっては初期化してない状態の変数を参照することを未然に防ぐことができない.}ので最初に初期化するのが重要です.
 
 \begin{column}{\texttt{Python}における代入と初期化}
-\terlogy{Python}では宣言時に初期化を行う必要があります.つまり,宣言と初期化は同じものと考えて構いません.加えて,宣言（=初期化）と代入が見かけ上,同じコードになってしまいます.上の例では\terlogy{variable}という変数に\terlogy{810}という値を代入をしていますが,これは状況によっては\terlogy{variable}を宣言しているという意味になります.もし,\terlogy{variable}がそれ以前のコードで宣言されている場合は代入,そうでない場合は宣言となります.
+  \terlogy{Python}では宣言時に初期化を行う必要があります.つまり,宣言と初期化は同じものと考えて構いません.加えて,宣言（=初期化）と代入が見かけ上,同じコードになってしまいます.上の例では\terlogy{variable}という変数に\terlogy{810}という値を代入をしていますが,これは状況によっては\terlogy{variable}を宣言しているという意味になります.もし,\terlogy{variable}がそれ以前のコードで宣言されている場合は代入,そうでない場合は宣言となります.
 \end{column}
 
 \subsection{参照}
@@ -730,15 +730,15 @@ public static final double PI = 3.14159265;
 演算と聞いて想像するようないわゆる「計算」を行う演算子を\teremp[算術演算子]といいます.
 
 \begin{center}
-\begin{tabular}{|c|c|}
-  \hline
-  \textbf{演算子} & \textbf{説明} \\ \hline
-  \terlogy{x + y} & 加算 \\ \hline
-  \terlogy{x - y} & 減算 \\ \hline
-  \terlogy{x * y} & 乗算 \\ \hline
-  \terlogy{x / y} & 除算（xをyで割る） \\ \hline
-  \terlogy{x \% y} & 剰余（xをyで割った余り） \\ \hline
-  \terlogy{x ** y} & べき乗（xのy乗） \\ \hline
+  \begin{tabular}{|c|c|}
+    \hline
+    \textbf{演算子}  & \textbf{説明}            \\ \hline
+    \terlogy{x + y}  & 加算                     \\ \hline
+    \terlogy{x - y}  & 減算                     \\ \hline
+    \terlogy{x * y}  & 乗算                     \\ \hline
+    \terlogy{x / y}  & 除算（xをyで割る）       \\ \hline
+    \terlogy{x \% y} & 剰余（xをyで割った余り） \\ \hline
+    \terlogy{x ** y} & べき乗（xのy乗）         \\ \hline
   \end{tabular}
 \end{center}
 
@@ -747,23 +747,23 @@ public static final double PI = 3.14159265;
 \subsection{ビット演算子}
 コンピュータはビットの演算によって様々な計算を可能にしており,プログラミング言語でもビットの演算についての演算子である\terlogy{ビット演算子}が存在します.使う機会は少なそうですが.
 \begin{center}
-\begin{tabular}{|c|c|}
-  \hline
-  \textbf{演算子} & \textbf{名称} \\
-  \hline
-  \terlogy{x & y} & ビットAND（論理積） \\
-  \hline
-  \terlogy{x | y} & ビットOR（論理和） \\
-  \hline
-  \terlogy{x ^ y} & ビットXOR（排他的論理和） \\
-  \hline
-  \terlogy{~x} & ビットNOT（反転） \\
-  \hline
-  \terlogy{x << y} & 左シフト（yだけシフト） \\
-  \hline
-  \terlogy{x >> y} & 右シフト（yだけシフト） \\
-  \hline
-\end{tabular}
+  \begin{tabular}{|c|c|}
+    \hline
+    \textbf{演算子}  & \textbf{名称}                                   \\
+    \hline
+    \terlogy{x       & y}                        & ビットAND（論理積） \\
+    \hline
+    \terlogy{x | y}  & ビットOR（論理和）                              \\
+    \hline
+    \terlogy{x ^ y}  & ビットXOR（排他的論理和）                       \\
+    \hline
+    \terlogy{~x}     & ビットNOT（反転）                               \\
+    \hline
+    \terlogy{x << y} & 左シフト（yだけシフト）                         \\
+    \hline
+    \terlogy{x >> y} & 右シフト（yだけシフト）                         \\
+    \hline
+  \end{tabular}
 \end{center}
 
 
@@ -772,33 +772,33 @@ public static final double PI = 3.14159265;
 変数に代入を行う演算子を\teremp[代入演算子]といいます.プログラミング言語では算術演算子と組み合わせて代入を行うことが多いため,算術と代入を組み合わせた\teremp[複合代入演算子]が準備されています.
 \begin{center}
   \begin{tabular}{|c|c|c|}
-  \hline
-  \textbf{演算子} & \textbf{名称} & \textbf{書き換え} \\
-  \hline
-  \terlogy{x = y} & 代入 & --- \\
-  \hline
-  \terlogy{x += y} & 加算代入 & \terlogy{x = x + y} \\
-  \hline
-  \terlogy{x -= y} & 減算代入 & \terlogy{x = x - y} \\
-  \hline
-  \terlogy{x *= y} & 乗算代入 & \terlogy{x = x * y} \\
-  \hline
-  \terlogy{x /= y} & 除算代入 & \terlogy{x = x / y} \\
-  \hline
-  \terlogy{x \%= y} & 剰余代入 & \terlogy{x = x \% y} \\
-  \hline
-  \terlogy{x \&= y} & ビット論理積代入 & \terlogy{x = x \& y} \\
-  \hline
-  \terlogy{x \|= y} & ビット論理和代入 & \terlogy{x = x \| y} \\
-  \hline
-  \terlogy{x ^= y} & ビット排他的論理和代入 & \terlogy{x = x ^ y} \\
-  \hline
-  \terlogy{x <<= y} & 左シフト代入 & \terlogy{x = x << y} \\
-  \hline
-  \terlogy{x >>= y} & 右シフト代入 & \terlogy{x = x >> y} \\
-  \hline
+    \hline
+    \textbf{演算子}   & \textbf{名称}          & \textbf{書き換え}    \\
+    \hline
+    \terlogy{x = y}   & 代入                   & ---                  \\
+    \hline
+    \terlogy{x += y}  & 加算代入               & \terlogy{x = x + y}  \\
+    \hline
+    \terlogy{x -= y}  & 減算代入               & \terlogy{x = x - y}  \\
+    \hline
+    \terlogy{x *= y}  & 乗算代入               & \terlogy{x = x * y}  \\
+    \hline
+    \terlogy{x /= y}  & 除算代入               & \terlogy{x = x / y}  \\
+    \hline
+    \terlogy{x \%= y} & 剰余代入               & \terlogy{x = x \% y} \\
+    \hline
+    \terlogy{x \&= y} & ビット論理積代入       & \terlogy{x = x \& y} \\
+    \hline
+    \terlogy{x \|= y} & ビット論理和代入       & \terlogy{x = x \| y} \\
+    \hline
+    \terlogy{x ^= y}  & ビット排他的論理和代入 & \terlogy{x = x ^ y}  \\
+    \hline
+    \terlogy{x <<= y} & 左シフト代入           & \terlogy{x = x << y} \\
+    \hline
+    \terlogy{x >>= y} & 右シフト代入           & \terlogy{x = x >> y} \\
+    \hline
   \end{tabular}
-  \end{center}
+\end{center}
 
 \terlogy{=}はプログラミングでは代入を表すことに注意が必要です.また,\terlogy{=}は右辺を先に評価あるいは計算します.なので,表の書き換えにあるように右辺と左辺で同一の変数を記述できます.つまり,\terlogy{x}を用いて\terlogy{x}を更新できるということですが,代入演算子を用いることで簡単に記述できます.
 
@@ -807,27 +807,27 @@ public static final double PI = 3.14159265;
 \begin{center}
   \begin{tabular}{|c|c|c|}
     \hline
-    \textbf{演算子} & \textbf{説明} & \textbf{書き換え} \\ \hline
-    \terlogy{x++} & インクリメント & \terlogy{x = x + 1}または\terlogy{x += 1} \\ \hline
-    \terlogy{x--} & デクリメント & \terlogy{x = x - 1}または\terlogy{x -= 1} \\ \hline
-    \end{tabular}
-  \end{center}
+    \textbf{演算子} & \textbf{説明}  & \textbf{書き換え}                         \\ \hline
+    \terlogy{x++}   & インクリメント & \terlogy{x = x + 1}または\terlogy{x += 1} \\ \hline
+    \terlogy{x--}   & デクリメント   & \terlogy{x = x - 1}または\terlogy{x -= 1} \\ \hline
+  \end{tabular}
+\end{center}
 
 \subsection{関係演算子}
 \teremp[関係演算子]は複数の値の関係をもとに真偽値=\terlogy{boolean}を演算結果として返します.
 
 \begin{center}
   \begin{tabular}{|c|c|l|}
-  \hline
-  \textbf{演算子} & \textbf{名称} & \textbf{Trueとなる条件（それ以外はFalse）} \\
-  \hline
-  \terlogy{x == y} & 等しい & \terlogy{x} と \terlogy{y} が等しい場合にTrue \\
-  \terlogy{x != y} & 等しくない & \terlogy{x} と \terlogy{y} が異なる場合にTrue \\
-  \terlogy{x > y} & 大なり & \terlogy{x} が \terlogy{y} よりも大きい場合にTrue \\
-  \terlogy{x >= y} & 大なりイコール & \terlogy{x} が \terlogy{y} 以上の場合にTrue \\
-  \terlogy{x < y} & 小なり & \terlogy{x} が \terlogy{y} よりも小さい場合にTrue \\
-  \terlogy{x <= y} & 小なりイコール & \terlogy{x} が \terlogy{y} 以下の場合にTrue \\
-  \hline
+    \hline
+    \textbf{演算子}  & \textbf{名称}  & \textbf{Trueとなる条件（それ以外はFalse）}        \\
+    \hline
+    \terlogy{x == y} & 等しい         & \terlogy{x} と \terlogy{y} が等しい場合にTrue     \\
+    \terlogy{x != y} & 等しくない     & \terlogy{x} と \terlogy{y} が異なる場合にTrue     \\
+    \terlogy{x > y}  & 大なり         & \terlogy{x} が \terlogy{y} よりも大きい場合にTrue \\
+    \terlogy{x >= y} & 大なりイコール & \terlogy{x} が \terlogy{y} 以上の場合にTrue       \\
+    \terlogy{x < y}  & 小なり         & \terlogy{x} が \terlogy{y} よりも小さい場合にTrue \\
+    \terlogy{x <= y} & 小なりイコール & \terlogy{x} が \terlogy{y} 以下の場合にTrue       \\
+    \hline
   \end{tabular}
 \end{center}
 
@@ -837,15 +837,15 @@ public static final double PI = 3.14159265;
 複数の真偽値を評価し,真偽値を返す演算子を\teremp[論理演算子]といいます.
 
 \begin{center}
-\begin{tabular}{|c|c|l|}
-  \hline
-  \textbf{演算子} & \textbf{名称} & \textbf{説明} \\
-  \hline
-  \terlogy{x \&\& y}または\terlogy{x and y} & 論理AND & \terlogy{x}と\terlogy{y}がTrueの場合にTrueを返す \\
-  \terlogy{x \|\| y}または\terlogy{x or y} & 論理OR & \terlogy{x}と\terlogy{y}の少なくとも1つがTrueの場合にTrueを返す \\
-  \terlogy{!x}または\terlogy{not x} & 論理NOT & 条件を反転（TrueならFalseに,FalseならTrueに） \\
-  \hline
-\end{tabular}
+  \begin{tabular}{|c|c|l|}
+    \hline
+    \textbf{演算子}                           & \textbf{名称} & \textbf{説明}                                                   \\
+    \hline
+    \terlogy{x \&\& y}または\terlogy{x and y} & 論理AND       & \terlogy{x}と\terlogy{y}がTrueの場合にTrueを返す                \\
+    \terlogy{x \|\| y}または\terlogy{x or y}  & 論理OR        & \terlogy{x}と\terlogy{y}の少なくとも1つがTrueの場合にTrueを返す \\
+    \terlogy{!x}または\terlogy{not x}         & 論理NOT       & 条件を反転（TrueならFalseに,FalseならTrueに）                   \\
+    \hline
+  \end{tabular}
 \end{center}
 
 \terlogy{x}や\terlogy{y}には関係演算子によるいわゆる条件式が置かれることが多いですが,真偽値の変数も置くことができます.
@@ -882,7 +882,7 @@ public static final double PI = 3.14159265;
 ある真偽値を評価し,それによって異なる2つの値のどちらかを返す演算子を\teremp[条件演算子]または\teremp[三項演算子]といい,一種の糖衣構文とみなすことができます.C言語系と\terlogy{Python}で二種類の書き方があります.以下ではC言語系として\terlogy{Java}の例を挙げます.
 
 \begin{zennwt}{Javaの例}
-\begin{lstlisting}[language=myjava]
+  \begin{lstlisting}[language=myjava]
 // [条件文] ? [trueのときの値] : [falseのときの値]
 String s = age >= 18 ? "成年済み" : "未成年";
 System.out.println("あなたは" + s + "です.");
@@ -898,10 +898,10 @@ System.out.println("あなたは" + s + "です.");
 \end{zennwt}
 
 \begin{column}{\texttt{if文}との違い}
-条件演算子は\terlogy{if文}の糖衣構文です.上の例を書き換えてみましょう.
+  条件演算子は\terlogy{if文}の糖衣構文です.上の例を書き換えてみましょう.
 
-\begin{zennwt}{Pythonの例}
-\begin{lstlisting}[language=mypy]
+  \begin{zennwt}{Pythonの例}
+    \begin{lstlisting}[language=mypy]
   if age >= 18:
     _s = "成年済み"
   else:
@@ -909,11 +909,11 @@ System.out.println("あなたは" + s + "です.");
   s = _s
   print("あなたは" + s + "です.")
 \end{lstlisting}
-\end{zennwt}
+  \end{zennwt}
 
-\terlogy{if文}による条件分岐の実行ブロックが値の代入のみで終わる場合に糖衣構文として条件演算子が使えます.ただ,あくまで演算子であり,代入はしなくても,例えば引数にしたりすることもできます.上のように\terlogy{_s}という変数を媒介にしたのはそのためです.
+  \terlogy{if文}による条件分岐の実行ブロックが値の代入のみで終わる場合に糖衣構文として条件演算子が使えます.ただ,あくまで演算子であり,代入はしなくても,例えば引数にしたりすることもできます.上のように\terlogy{_s}という変数を媒介にしたのはそのためです.
 
-また,一部の言語では\terlogy{if文}そのもので三項演算子のような記述ができます.この場合,正確には\terlogy{if式}が準備されており,それを使っていることになります.\terlogy{if文}と\terlogy{if式}---すなわち文と式の違いは後ほど述べます.
+  また,一部の言語では\terlogy{if文}そのもので三項演算子のような記述ができます.この場合,正確には\terlogy{if式}が準備されており,それを使っていることになります.\terlogy{if文}と\terlogy{if式}---すなわち文と式の違いは後ほど述べます.
 \end{column}
 
 
@@ -1317,14 +1317,14 @@ for (int i = 0; i < 10; i++) {
 
 \begin{itemize}
   \item \teremp[メンバ変数（フィールド）]：クラス内直下に定義される変数で、そのクラスやインスタンスの「属性」や「設定」を表す場合が多い。オブジェクト指向でいう「データ」に値する。
-  \begin{itemize}
-    \item \teremp[クラス変数]：クラスを通じて同じものが定義されているメンバ変数。一般的には定数を用いることが多い。
-    \item \teremp[インスタンス変数（属性）]：インスタンスごとに違うものが代入されてるメンバ変数。一般的にメンバ変数と表記する場合もある。
-  \end{itemize}
+        \begin{itemize}
+          \item \teremp[クラス変数]：クラスを通じて同じものが定義されているメンバ変数。一般的には定数を用いることが多い。
+          \item \teremp[インスタンス変数（属性）]：インスタンスごとに違うものが代入されてるメンバ変数。一般的にメンバ変数と表記する場合もある。
+        \end{itemize}
   \item \teremp[メソッド（メンバ関数）]：クラス内直下に定義される関数で、そのクラスやインスタンスの「機能」を表す場合が多い。オブジェクト指向でいう「プロセス」に値する。
-  \begin{itemize}
-    \item \teremp[コンストラクタ]：クラスがインスタンス化された際に実行される処理。主にメンバ変数---特にインスタンス変数の初期化を行う場合が多い。
-  \end{itemize}
+        \begin{itemize}
+          \item \teremp[コンストラクタ]：クラスがインスタンス化された際に実行される処理。主にメンバ変数---特にインスタンス変数の初期化を行う場合が多い。
+        \end{itemize}
 \end{itemize}
 
 では\terlogy{Python}でのクラスの定義方法を見てみましょう。
@@ -1493,9 +1493,9 @@ sayHello(new Robot("太郎", 26, 5));
 
   \begin{enumerate}
     \item カプセル化\\
-    構造体のメンバ変数は外部から出し入れするためのものですので、情報隠蔽やアクセス制限は基本的に行いません。
+          構造体のメンバ変数は外部から出し入れするためのものですので、情報隠蔽やアクセス制限は基本的に行いません。
     \item 値コピーと参照コピー\\
-    クラスはプリミティブ型ではなく参照型なので、クラスのインスタンスがコピーされたときは参照がコピーされます。それに対して、構造体はプリミティブ型のような値コピーを行うので、構造体をコピーした際、インスタンスは別値として扱われます。
+          クラスはプリミティブ型ではなく参照型なので、クラスのインスタンスがコピーされたときは参照がコピーされます。それに対して、構造体はプリミティブ型のような値コピーを行うので、構造体をコピーした際、インスタンスは別値として扱われます。
   \end{enumerate}
 
   やはり注目すべきは構造体は値コピーである点です。インスタンスをコピーして値を編集しても他方に影響しないのです。クラスは影響してしまいます。また、一部の言語では構造体にメソッドが用意されていません。用意されている言語では、クラスと同じようにメソッドを記述することができ、「プロセス」を実装することもできます。また、クラスと同様に継承を行うこともできます。ただ、これらの機能は言語における構造体の定義や考え方に依存しています。
